@@ -5,7 +5,7 @@
 # COMMAND ----------
 
 # DBTITLE 1,Read 'Bronze' delta 
-deaths_df = spark.read.format("delta").load("/FileStore/tables/Covid/01.Bronze/Cases/")
+deaths_df = spark.read.format("delta").load("/FileStore/tables/Covid/01.Bronze/Deaths/")
 
 display(deaths_df)
 
@@ -74,47 +74,7 @@ deaths_df.filter(deaths_df.Country == 'China').groupBy('State').count().show()
 # COMMAND ----------
 
 # DBTITLE 1,Write to 'Silver'
-cases_df.write.format("delta").mode("overwrite").save("/FileStore/tables/Covid/02.Silver/Cases/")
+deaths_df.write.format("delta").mode("overwrite").save("/FileStore/tables/Covid/02.Silver/Deaths/")
 
 # check
-dbutils.fs.ls("/FileStore/tables/Covid/02.Silver/Cases/")
-
-# COMMAND ----------
-
-# DBTITLE 1,Aggregate cases by date and country
-from pyspark.sql.functions import col, sha2, concat
-
-deaths_agg_df = (deaths_df.groupBy("Date", "Country").agg({"Value":"sum"})
-                        .withColumn("CaseKey", sha2(concat(col("Country"), col("Date")), 256))
-                        .select(col("CaseKey").alias("CaseKey"),
-                                col("Date").alias("Date"),
-                                col("Country").alias("Country"),
-                                col("sum(Value)").alias("Value"))
-               )
-
-display(deaths_agg_df)
-
-# COMMAND ----------
-
-# DBTITLE 1,Read 'countries' parquet file
-countries_df = spark.read.format("delta").load("/FileStore/tables/Covid/02.Silver/Countries/")
-
-display(countries_df)
-
-# COMMAND ----------
-
-# DBTITLE 1,Join with the countries dataset to bring the 'IsoCode' column
-deaths_agg_joined_df = (deaths_agg_df.join(countries_df, deaths_agg_df.Country == countries_df.Country, how='left')
-                                  .select(deaths_agg_df['*'], countries_df.IsoCode3)
-                      )
-
-display(deaths_agg_joined_df)
-
-# COMMAND ----------
-
-# DBTITLE 1,Write to 'Silver' 
-deaths_agg_joined_df.write.format("delta").mode("overwrite").save("/FileStore/tables/Covid/02.Silver/Deaths/")
-
-# COMMAND ----------
-
-
+dbutils.fs.ls("/FileStore/tables/Covid/02.Silver/Deaths/")

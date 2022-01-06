@@ -1,9 +1,9 @@
 # Databricks notebook source
 # DBTITLE 1,Create Folders Structure
-dbutils.fs.mkdirs("/FileStore/tables/Covid")
+# dbutils.fs.mkdirs("/FileStore/tables/Covid")
 
 # Store inbound files
-dbutils.fs.mkdirs("/FileStore/tables/Covid/00.Inbound")
+# dbutils.fs.mkdirs("/FileStore/tables/Covid/00.Inbound")
 
 # Bronze layer = store all files in original format
 dbutils.fs.mkdirs("/FileStore/tables/Covid/01.Bronze")
@@ -30,16 +30,20 @@ dbutils.fs.mkdirs("/FileStore/tables/Covid/03.Gold/Deaths")
 dbutils.fs.mkdirs("/FileStore/tables/Covid/03.Gold/Countries")
 
 # remove folders if needed
-# dbutils.fs.rm("/FileStore/tables/Covid/Gold/Cases/", True)
-# dbutils.fs.rm("/FileStore/tables/Covid/Gold/Deaths/", True)
-# dbutils.fs.rm("/FileStore/tables/Covid/Gold/Countries/", True)
+# dbutils.fs.rm("/FileStore/tables/Covid/03.Gold/Cases/", True)
+# dbutils.fs.rm("/FileStore/tables/Covid/03.Gold/Deaths/", True)
+# dbutils.fs.rm("/FileStore/tables/Covid/03.Gold/Countries/", True)
 
-# dbutils.fs.rm("/FileStore/tables/Covid/Silver/Cases/", True)
-# dbutils.fs.rm("/FileStore/tables/Covid/Silver/Deaths/", True)
-# dbutils.fs.rm("/FileStore/tables/Covid/Silver/Countries/", True)
+# dbutils.fs.rm("/FileStore/tables/Covid/02.Silver/Cases/", True)
+# dbutils.fs.rm("/FileStore/tables/Covid/02.Silver/Deaths/", True)
+# dbutils.fs.rm("/FileStore/tables/Covid/02.Silver/Countries/", True)
 
-# dbutils.fs.rm("/FileStore/tables/Covid/Bronze/Cases/", True)
-# dbutils.fs.rm("/FileStore/tables/Covid/Bronze/Deaths/", True)
-# dbutils.fs.rm("/FileStore/tables/Covid/Bronze/Countries/", True)
+# dbutils.fs.rm("/FileStore/tables/Covid/01.Bronze/Cases/", True)
+# dbutils.fs.rm("/FileStore/tables/Covid/01.Bronze/Deaths/", True)
+# dbutils.fs.rm("/FileStore/tables/Covid/01.Bronze/Countries/", True)
 
-dbutils.fs.rm("/FileStore/tables/Covid/Inbound/", True)
+# dbutils.fs.rm("/FileStore/tables/Covid/Inbound/", True)
+
+# COMMAND ----------
+
+

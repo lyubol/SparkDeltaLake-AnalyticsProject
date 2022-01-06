@@ -15,8 +15,8 @@ display(cases_df)
 from pyspark.sql.functions import col, sha2, concat
 
 cases_agg_df = (cases_df.groupBy("Date", "Country").agg({"Value":"sum"})
-                        .withColumn("CaseKey", sha2(concat(col("Country"), col("Date")), 256))
-                        .select(col("CaseKey").alias("CaseKey"),
+                        .withColumn("Key", sha2(concat(col("Country"), col("Date")), 256))
+                        .select(col("Key").alias("Key"),
                                 col("Date").alias("Date"),
                                 col("Country").alias("Country"),
                                 col("sum(Value)").alias("Value"))
