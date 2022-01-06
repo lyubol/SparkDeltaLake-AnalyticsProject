@@ -34,7 +34,7 @@ display(deaths_df)
 # COMMAND ----------
 
 # DBTITLE 1,Write to 'Bronze'
-deaths_df.write.format("delta").save("/FileStore/tables/Covid/01.Bronze/Deaths/")
+deaths_df.write.format("delta").mode("overwrite").save("/FileStore/tables/Covid/01.Bronze/Deaths/")
 
 # check 
 dbutils.fs.ls("/FileStore/tables/Covid/01.Bronze/Deaths/")
